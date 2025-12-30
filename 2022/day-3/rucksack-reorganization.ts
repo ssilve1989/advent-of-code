@@ -1,7 +1,7 @@
 import path from "node:path";
 import { intersection } from "mnemonist/set";
 import { bufferCount, map, mergeMap, reduce } from "rxjs";
-import { getInputStream } from "../common/get-input-stream";
+import { getInputStream } from "../../common/get-input-stream.js";
 
 const LOWERCASE_OFFSET = -96;
 const UPPERCASE_OFFSET = -38;
@@ -30,7 +30,13 @@ const part2$ = input$
 	.pipe(
 		bufferCount(3),
 		map((lines) => lines.map((s) => new Set(s.split("")))),
-		mergeMap((sets) => intersection(...sets)),
+		mergeMap((sets) => {
+			let common = sets[0];
+			for (let i = 1; i < sets.length; i++) {
+				common = intersection(common, sets[i]);
+			}
+			return common;
+		}),
 		reduce((acc, char) => acc + getPriority(char), 0),
 	)
 	.subscribe(console.log);

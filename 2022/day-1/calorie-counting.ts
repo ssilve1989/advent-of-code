@@ -11,7 +11,7 @@ import {
 	takeLast,
 	toArray,
 } from "rxjs";
-import { getInputStream } from "../common/get-input-stream";
+import { getInputStream } from "../../common/get-input-stream.js";
 
 const lines$ = getInputStream(path.resolve(`${__dirname}/input.txt`));
 
@@ -20,9 +20,9 @@ const calories$ = lines$.pipe(
 	bufferWhen(() => lines$.pipe(filter((value) => value === ""))),
 	map((calories) =>
 		calories
-			.map((value) => Number.parseInt(value as string))
+			.map((value) => Number.parseInt(value as string, 10))
 			.filter((value) => !Number.isNaN(value))
-			.reduce((acc, value) => (acc += value)),
+			.reduce((acc, value) => acc + value, 0),
 	),
 );
 
@@ -37,7 +37,7 @@ const topThreeCombinedCalories$ = calories$.pipe(
 	map((calories) => calories.sort((a, b) => b - a)),
 	mergeMap((calories) => calories),
 	take(3),
-	reduce((acc, curr) => (acc += curr)),
+	reduce((acc, curr) => acc + curr, 0),
 );
 
 mostCalories$.subscribe({

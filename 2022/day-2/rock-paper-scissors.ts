@@ -1,7 +1,7 @@
 import path from "node:path";
 import { map, reduce } from "rxjs";
 import { match } from "ts-pattern";
-import { getInputStream } from "../common/get-input-stream";
+import { getInputStream } from "../../common/get-input-stream.js";
 
 enum Hand {
 	Rock = 0,

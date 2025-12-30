@@ -1,6 +1,6 @@
 import { createReadStream } from "node:fs";
-import { createInterface } from "node:readline";
 import { join } from "node:path";
+import { createInterface } from "node:readline";
 
 async function parseInputStream(
 	filePath: string,

@@ -12,13 +12,18 @@ function simulate(lines: string[], isCrateMover9001: boolean) {
 		)
 		.reduce(
 			(stacks, line) => {
-				line.forEach((char, index) => (char ? stacks[index].push(char) : null));
+				for (let index = 0; index < line.length; index++) {
+					const char = line[index];
+					if (char) {
+						stacks[index].push(char);
+					}
+				}
 				return stacks;
 			},
-			Array.from({ length: 9 }).map(() => []),
+			Array.from({ length: 9 }).map(() => []) as string[][],
 		);
 
-	const performMove = ([move, from, to]) => {
+	const performMove = ([move, from, to]: [number, number, number]) => {
 		const source = from - 1;
 		const target = to - 1;
 		const items = stacks[source].splice(0, move);
@@ -30,8 +35,12 @@ function simulate(lines: string[], isCrateMover9001: boolean) {
 		.slice(10)
 		.filter(Boolean)
 		.map((line) => line.match(/\d+/g))
-		.map((line) => line.map(Number))
-		.forEach(performMove);
+		.map((line) => line?.map(Number))
+		.forEach((line) => {
+			if (line && line.length === 3) {
+				performMove([line[0], line[1], line[2]]);
+			}
+		});
 
 	return stacks.map((stack) => stack[0]).join("");
 }

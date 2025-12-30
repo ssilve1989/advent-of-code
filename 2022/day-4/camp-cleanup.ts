@@ -1,13 +1,13 @@
 import path from "node:path";
 import { count, filter, map } from "rxjs";
-import { getInputStream } from "../common/get-input-stream";
+import { getInputStream } from "../../common/get-input-stream.js";
 
 const input$ = getInputStream(path.resolve(__dirname, "input.txt")).pipe(
 	map((line) => line.split(",")),
 	map((line) =>
 		line.map(
 			(item) =>
-				item.split("-").map((v) => Number.parseInt(v)) as [number, number],
+				item.split("-").map((v) => Number.parseInt(v, 10)) as [number, number],
 		),
 	),
 );

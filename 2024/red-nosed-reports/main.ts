@@ -2,15 +2,6 @@ import { createReadStream } from "node:fs";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
 
-function* generateSampleSet() {
-	yield [7, 6, 4, 2, 1];
-	yield [1, 2, 7, 8, 9];
-	yield [9, 7, 6, 2, 1];
-	yield [1, 3, 2, 4, 5];
-	yield [8, 6, 4, 4, 1];
-	yield [1, 3, 6, 7, 9];
-}
-
 async function* parseInput(filePath: string) {
 	const fileStream = createReadStream(join(__dirname, filePath));
 	const rl = createInterface({

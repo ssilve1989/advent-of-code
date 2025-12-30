@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
-import { type Observable, fromEvent, share, takeUntil } from "rxjs";
+import { fromEvent, type Observable, share, takeUntil } from "rxjs";
 
 export function getInputStream(file: string): Observable<string> {
 	const rl = readline.createInterface({
