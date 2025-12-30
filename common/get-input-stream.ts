@@ -13,3 +13,16 @@ export function getInputStream(file: string): Observable<string> {
 	const lines$ = fromEvent(rl, "line") as Observable<string>;
 	return lines$.pipe(share(), takeUntil(close$)) as Observable<string>;
 }
+
+/**
+ * Get a ReadableStream for the given file path
+ * Uses Bun's file streaming capabilities
+ * @param filePath
+ * @returns
+ */
+export function getReadableStream(
+	filePath: string,
+): ReadableStream<Uint8Array<ArrayBuffer>> {
+	const file = Bun.file(filePath);
+	return file.stream();
+}
